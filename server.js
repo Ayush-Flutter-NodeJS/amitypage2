@@ -8,9 +8,9 @@ const port = 3000;
 // Database configuration (put your actual credentials here)
 const dbConfig = {
   host: 'localhost',
-  user: 'amity_admin',      // Replace with your database username
-  password: 'SecurePassword123!',  // Replace with your database password
-  database: 'amity_enquiries'
+  user: 'onli_amitymba',      // Replace with your database username
+  password: 'O0BDoHKiwkI01-tA',  // Replace with your database password
+  database: 'onli_amity'
 };
 
 // Middleware
