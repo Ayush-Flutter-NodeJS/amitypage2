@@ -7,20 +7,17 @@ const port = 3000;
 
 // Database configuration
 const dbConfig = {
-  host: 'localhost',              // or your DB host IP if remote
-  user: 'onli_amitymba',          // DB user
-  password: 'O0BDoHKiwkI01-tA',   // DB password
-  database: 'onli_amity'          // DB name
+  host: 'localhost',
+  user: 'onli_amitymba',
+  password: 'O0BDoHKiwkI01-tA',
+  database: 'onli_amity'
 };
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// MySQL connection pool
 const pool = mysql.createPool(dbConfig);
 
-// Test DB connection at startup
 async function testConnection() {
   try {
     const connection = await pool.getConnection();
@@ -28,23 +25,24 @@ async function testConnection() {
     connection.release();
   } catch (err) {
     console.error('❌ Database connection failed:', err.message);
-    process.exit(1); // Exit the app if DB connection fails
+    process.exit(1);
   }
 }
 
-// API route to handle enquiries
+// Updated API endpoint
 app.post('/api/enquiries', async (req, res) => {
-  const { full_name, phone_number, email } = req.body;
+  const { full_name, phone_number, email, course, admission_timeline } = req.body;
 
-  // Input validation
-  if (!full_name || !phone_number || !email) {
+  // Validate required fields
+  if (!full_name || !phone_number || !email || !course || !admission_timeline) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
     const [result] = await pool.query(
-      'INSERT INTO enquiries (full_name, phone_number, email) VALUES (?, ?, ?)',
-      [full_name, phone_number, email]
+      `INSERT INTO enquiries (full_name, phone_number, email, course, admission_timeline)
+       VALUES (?, ?, ?, ?, ?)`,
+      [full_name, phone_number, email, course, admission_timeline]
     );
 
     res.json({
@@ -57,8 +55,8 @@ app.post('/api/enquiries', async (req, res) => {
   }
 });
 
-// Start the server
+// Start server
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
-  testConnection(); // Check DB connection
+  testConnection();
 });
