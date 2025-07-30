@@ -9,9 +9,9 @@ const port = 3000;
 // Database configuration
 const dbConfig = {
   host: 'localhost',
-  user: 'onli_amitymba',
-  password: 'O0BDoHKiwkI01-tA',
-  database: 'onli_amity'
+  user: 'amitymba',
+  password: 'OpjwKsPP8He42ghfhTLQ',
+  database: 'amity'
 };
 
 // Email configuration
