@@ -41,27 +41,26 @@ async function testConnection() {
   }
 }
 
-// Updated API endpoint with email functionality
+
 app.post('/api/enquiries', async (req, res) => {
   const { full_name, phone_number, email, course, admission_timeline } = req.body;
 
-  // Validate required fields
   if (!full_name || !phone_number || !email || !course || !admission_timeline) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
-    // Insert into database
+    
     const [result] = await pool.query(
       `INSERT INTO enquiries (full_name, phone_number, email, course, admission_timeline)
        VALUES (?, ?, ?, ?, ?)`,
       [full_name, phone_number, email, course, admission_timeline]
     );
 
-    // Send email
+    
     const mailOptions = {
       from: 'ashish.g14@gmail.com',
-      to: 'ashish.g14@gmail.com', // Sending to yourself
+      to: 'ashish.g14@gmail.com', 
       subject: `New Enquiry Received - ${full_name}`,
       html: `
         <h2>New Enquiry Details:</h2>
